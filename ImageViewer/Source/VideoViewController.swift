@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-
+import KTVHTTPCache
 
 extension VideoView: ItemView {}
 
@@ -31,6 +31,7 @@ class VideoViewController: ItemBaseController<VideoView> {
 
         self.videoURL = videoURL
         self.scrubber = scrubber
+        let ktvUrl = KTVHTTPCache.proxyURL(withOriginalURL: self.videoURL)!
         self.player = AVPlayer(url: self.videoURL)
         
         ///Only those options relevant to the paging VideoViewController are explicitly handled here, the rest is handled by ItemViewControllers
@@ -46,6 +47,9 @@ class VideoViewController: ItemBaseController<VideoView> {
         }
 
         super.init(index: index, itemCount: itemCount, fetchImageBlock: fetchImageBlock, configuration: configuration, isInitialController: isInitialController)
+        
+        scrubber.delegate = self
+        
     }
 
     override func viewDidLoad() {
@@ -58,11 +62,11 @@ class VideoViewController: ItemBaseController<VideoView> {
         embeddedPlayButton.center = self.view.boundsCenter
 
         embeddedPlayButton.addTarget(self, action: #selector(playVideoInitially), for: UIControl.Event.touchUpInside)
-
+        self.itemView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.clickPlayerView)))
         self.itemView.player = player
         self.itemView.contentMode = .scaleAspectFill
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
 
         self.player.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.new, context: nil)
@@ -72,7 +76,15 @@ class VideoViewController: ItemBaseController<VideoView> {
 
         super.viewWillAppear(animated)
     }
-
+    @objc func clickPlayerView(){
+        if scrubber.isHidden{
+            scrubber.showScrubber()
+        }else{
+            if player.isPlaying(){
+                scrubber.hiddenScrubber()
+            }
+        }
+    }
     override func viewWillDisappear(_ animated: Bool) {
 
         self.player.removeObserver(self, forKeyPath: "status")
@@ -91,8 +103,11 @@ class VideoViewController: ItemBaseController<VideoView> {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-
+        
         self.player.pause()
+        embeddedPlayButton.isHidden = false
+        embeddedPlayButton.alpha = 1
+        scrubber.showScrubber()
     }
 
     override func viewDidLayoutSubviews() {
@@ -106,7 +121,7 @@ class VideoViewController: ItemBaseController<VideoView> {
     @objc func playVideoInitially() {
 
         self.player.play()
-
+        scrubber.hiddenScrubber()
 
         UIView.animate(withDuration: 0.25, animations: { [weak self] in
 
@@ -179,6 +194,13 @@ class VideoViewController: ItemBaseController<VideoView> {
 
                 self?.embeddedPlayButton.alpha = 0
             })
+        }else if !player.isPlaying(){
+            scrubber.showScrubber()
+            UIView.animate(withDuration: 0.3, animations: { [weak self] in
+                self?.embeddedPlayButton.alpha = 1
+            }){ [weak self] _ in
+                self?.embeddedPlayButton.isHidden = false
+            }
         }
     }
 
@@ -230,5 +252,13 @@ class VideoViewController: ItemBaseController<VideoView> {
         autoPlayStarted = true
         embeddedPlayButton.isHidden = true
         scrubber.play()
+    }
+}
+extension VideoViewController: VideoScrubberDelegate{
+    func dismissVC() {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.dismiss(animated: false, completion: nil)
+        })
+        
     }
 }

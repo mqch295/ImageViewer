@@ -42,7 +42,7 @@ class ViewController: UIViewController {
 
             case 2:
 
-                galleryItem = GalleryItem.video(fetchPreviewImageBlock: { $0(UIImage(named: "2")!) }, videoURL: URL (string: "http://video.dailymail.co.uk/video/mol/test/2016/09/21/5739239377694275356/1024x576_MP4_5739239377694275356.mp4")!)
+                galleryItem = GalleryItem.video(fetchPreviewImageBlock: { $0(UIImage(named: "2")!) }, videoURL: URL (string: "https://vod-progressive.akamaized.net/exp=1593531992~acl=%2A%2F623685558.mp4%2A~hmac=8d64ef29140b7e2cf463ff4f087bdb96c5b42982607517c60f0c74af99ad81f6/vimeo-prod-skyfire-std-us/01/2670/7/188350983/623685558.mp4?filename=Emoji+Saver+-+Patterns+in+the+Rain.mp4")!)
 
             case 4:
 

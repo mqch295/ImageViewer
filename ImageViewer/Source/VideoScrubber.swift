@@ -8,15 +8,19 @@
 
 import UIKit
 import AVFoundation
-
+public protocol VideoScrubberDelegate: class{
+    func dismissVC()
+}
 open class VideoScrubber: UIControl {
-
+    weak var delegate: VideoScrubberDelegate?
     let playButton = UIButton.playButton(width: 50, height: 40)
     let pauseButton = UIButton.pauseButton(width: 50, height: 40)
     let replayButton = UIButton.replayButton(width: 50, height: 40)
-
+    let closeBtn = UIButton.closeButton()
     let scrubber = Slider.createSlider(320, height: 20, pointerDiameter: 10, barHeight: 2)
-    let timeLabel = UILabel(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 50, height: 20)))
+    let currentTimeLabel = UILabel(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 50, height: 20)))
+    let totleTimeLabel = UILabel(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 50, height: 20)))
+    
     var duration: TimeInterval?
     fileprivate var periodicObserver: AnyObject?
     fileprivate var stoppedSlidingTimeStamp = Date()
@@ -116,17 +120,18 @@ open class VideoScrubber: UIControl {
         scrubber.minimumValue = 0
         scrubber.maximumValue = 1000
         scrubber.value = 0
-
-        timeLabel.attributedText = NSAttributedString(string: "--:--", attributes: timeLabelAttributes)
-        timeLabel.textAlignment =  .center
+        totleTimeLabel.attributedText = NSAttributedString(string: self.duration != nil ?  stringFromTimeInterval(self.duration!) : "--:--", attributes: timeLabelAttributes)
+        currentTimeLabel.attributedText = NSAttributedString(string: "--:--", attributes: timeLabelAttributes)
+        totleTimeLabel.textAlignment =  .center
+        currentTimeLabel.textAlignment =  .center
 
         playButton.addTarget(self, action: #selector(play), for: UIControl.Event.touchUpInside)
         pauseButton.addTarget(self, action: #selector(pause), for: UIControl.Event.touchUpInside)
         replayButton.addTarget(self, action: #selector(replay), for: UIControl.Event.touchUpInside)
         scrubber.addTarget(self, action: #selector(updateCurrentTime), for: UIControl.Event.valueChanged)
         scrubber.addTarget(self, action: #selector(seekToTime), for: [UIControl.Event.touchUpInside, UIControl.Event.touchUpOutside])
-
-        self.addSubviews(playButton, pauseButton, replayButton, scrubber, timeLabel)
+        closeBtn.addTarget(self, action: #selector(self.dismissVC), for: UIControl.Event.touchUpInside)
+        self.addSubviews(playButton, pauseButton, replayButton, totleTimeLabel, scrubber, currentTimeLabel, closeBtn)
 
         scrubber.addObserver(self, forKeyPath: "isSliding", options: NSKeyValueObservingOptions.new, context: nil)
     }
@@ -136,16 +141,19 @@ open class VideoScrubber: UIControl {
 
         playButton.center = self.boundsCenter
         playButton.frame.origin.x = 0
+        closeBtn.frame.origin.y = playButton.bounds.maxY + 50
+        closeBtn.frame.origin.x = playButton.bounds.minX
         pauseButton.frame = playButton.frame
         replayButton.frame = playButton.frame
-
-        timeLabel.center = self.boundsCenter
-        timeLabel.frame.origin.x = self.bounds.maxX - timeLabel.bounds.width
-
-        scrubber.bounds.size.width = self.bounds.width - playButton.bounds.width - timeLabel.bounds.width
+        
+        currentTimeLabel.center.y = self.boundsCenter.y
+        currentTimeLabel.frame.origin.x = playButton.frame.maxX
+        totleTimeLabel.frame.origin.x = self.bounds.maxX - currentTimeLabel.bounds.width
+        totleTimeLabel.center.y = self.boundsCenter.y
+        scrubber.bounds.size.width = self.bounds.width - playButton.bounds.width - totleTimeLabel.bounds.width - currentTimeLabel.bounds.width
         scrubber.bounds.size.height = 20
         scrubber.center = self.boundsCenter
-        scrubber.frame.origin.x = playButton.frame.maxX
+        scrubber.frame.origin.x = currentTimeLabel.frame.maxX
     }
 
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
@@ -163,12 +171,28 @@ open class VideoScrubber: UIControl {
             self.update()
         }
     }
-
+    @objc func dismissVC(){
+        self.delegate?.dismissVC()
+    }
     @objc func play() {
 
         self.player?.play()
+        self.hiddenScrubber()
     }
-
+    func hiddenScrubber(){
+        UIView.animate(withDuration: 0.25, animations: {
+            self.alpha = 0
+        }) { _ in
+            self.isHidden = true
+        }
+    }
+    func showScrubber(){
+        UIView.animate(withDuration: 0.25, animations: {
+            self.alpha = 1
+        }) { _ in
+            self.isHidden = false
+        }
+    }
     @objc func replay() {
 
         self.player?.seek(to: CMTime(value:0 , timescale: 1))
@@ -213,7 +237,8 @@ open class VideoScrubber: UIControl {
 
         if let duration = self.player?.currentItem?.duration {
 
-            self.duration = (duration.isNumeric) ? duration.seconds : nil
+             self.duration = (duration.isNumeric) ? duration.seconds : nil
+             totleTimeLabel.attributedText = NSAttributedString(string: self.duration != nil ?  stringFromTimeInterval(self.duration!) : "--:--", attributes: timeLabelAttributes)
         }
     }
 
@@ -249,10 +274,10 @@ open class VideoScrubber: UIControl {
 
             let timeString = stringFromTimeInterval(currentTime as TimeInterval)
 
-            timeLabel.attributedText = NSAttributedString(string: timeString, attributes: timeLabelAttributes)
+            currentTimeLabel.attributedText = NSAttributedString(string: timeString, attributes: timeLabelAttributes)
         }
         else {
-            timeLabel.attributedText = NSAttributedString(string: "--:--", attributes: timeLabelAttributes)
+            currentTimeLabel.attributedText = NSAttributedString(string: "--:--", attributes: timeLabelAttributes)
         }
     }
 
@@ -269,7 +294,8 @@ open class VideoScrubber: UIControl {
     }
     
     override open func tintColorDidChange() {
-        timeLabel.attributedText = NSAttributedString(string: "--:--", attributes: timeLabelAttributes)
+        totleTimeLabel.attributedText = NSAttributedString(string: self.duration != nil ?  stringFromTimeInterval(self.duration!) : "--:--", attributes: timeLabelAttributes)
+        currentTimeLabel.attributedText = NSAttributedString(string: "--:--", attributes: timeLabelAttributes)
         
         let playButtonImage = playButton.imageView?.image?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         playButton.imageView?.tintColor = self.tintColor
