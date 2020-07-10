@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="coc-LS-cRe" customClass="DisplaceableView" customModule="ImageViewer">
-                                <rect key="frame" x="16" y="28" width="200" height="102"/>
+                                <rect key="frame" x="16" y="8" width="200" height="102"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="102" id="MT7-qF-GTg"/>
@@ -34,7 +31,7 @@
                                 </connections>
                             </imageView>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9" translatesAutoresizingMaskIntoConstraints="NO" id="fu6-tO-ZRV" customClass="DisplaceableView" customModule="ImageViewer">
-                                <rect key="frame" x="224" y="28" width="80" height="102"/>
+                                <rect key="frame" x="224" y="8" width="80" height="102"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="102" id="dPz-y8-Z6Y"/>
@@ -44,7 +41,7 @@
                                 </connections>
                             </imageView>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2" translatesAutoresizingMaskIntoConstraints="NO" id="272-lL-lW4" customClass="DisplaceableView" customModule="ImageViewer">
-                                <rect key="frame" x="16" y="138" width="127" height="116"/>
+                                <rect key="frame" x="16" y="118" width="127" height="116"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="116" id="Y0l-M2-S7Y"/>
@@ -55,7 +52,7 @@
                                 </connections>
                             </imageView>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3" translatesAutoresizingMaskIntoConstraints="NO" id="9Vs-Br-5DO" customClass="DisplaceableView" customModule="ImageViewer">
-                                <rect key="frame" x="151" y="138" width="153" height="116"/>
+                                <rect key="frame" x="151" y="118" width="153" height="116"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="116" id="He9-TL-9k0"/>
@@ -65,7 +62,7 @@
                                 </connections>
                             </imageView>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="8" translatesAutoresizingMaskIntoConstraints="NO" id="JMP-xp-mLE" customClass="DisplaceableView" customModule="ImageViewer">
-                                <rect key="frame" x="16" y="262" width="161" height="175"/>
+                                <rect key="frame" x="16" y="242" width="161" height="175"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="175" id="jwj-PS-Jo7"/>
@@ -75,7 +72,7 @@
                                 </connections>
                             </imageView>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5" translatesAutoresizingMaskIntoConstraints="NO" id="e0P-yL-Aev" customClass="DisplaceableView" customModule="ImageViewer">
-                                <rect key="frame" x="185" y="262" width="119" height="175"/>
+                                <rect key="frame" x="185" y="242" width="119" height="175"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="175" id="0g5-fZ-sGn"/>
@@ -86,7 +83,7 @@
                                 </connections>
                             </imageView>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="6" translatesAutoresizingMaskIntoConstraints="NO" id="FkF-T8-MIe" customClass="DisplaceableView" customModule="ImageViewer">
-                                <rect key="frame" x="16" y="445" width="288" height="110"/>
+                                <rect key="frame" x="16" y="425" width="288" height="130"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="0dc-20-whm" appends="YES" id="iCR-D1-RHn"/>
@@ -166,16 +163,16 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-148" y="180"/>
+            <point key="canvasLocation" x="-214.49275362318843" y="120.53571428571428"/>
         </scene>
     </scenes>
     <resources>
         <image name="0" width="540" height="960"/>
         <image name="2" width="250" height="187"/>
         <image name="3" width="320" height="568"/>
-        <image name="5" width="309" height="128"/>
-        <image name="6" width="300" height="218"/>
-        <image name="8" width="1609" height="300"/>
+        <image name="5" width="309" height="128.5"/>
+        <image name="6" width="300" height="218.5"/>
+        <image name="8" width="1609.5" height="300"/>
         <image name="9" width="160" height="320"/>
     </resources>
 </document>

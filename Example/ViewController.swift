@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var image5: UIImageView!
     @IBOutlet weak var image6: UIImageView!
     @IBOutlet weak var image7: UIImageView!
-
+    var galleryViewController: GalleryViewController!
     var items: [DataItem] = []
 
     override func viewDidLoad() {
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
 
             case 2:
 
-                galleryItem = GalleryItem.video(fetchPreviewImageBlock: { $0(UIImage(named: "2")!) }, videoURL: URL (string: "https://vod-progressive.akamaized.net/exp=1593531992~acl=%2A%2F623685558.mp4%2A~hmac=8d64ef29140b7e2cf463ff4f087bdb96c5b42982607517c60f0c74af99ad81f6/vimeo-prod-skyfire-std-us/01/2670/7/188350983/623685558.mp4?filename=Emoji+Saver+-+Patterns+in+the+Rain.mp4")!)
+                galleryItem = GalleryItem.video(fetchPreviewImageBlock: { $0(UIImage(named: "2")!) }, videoURL: URL (string: "http://video.dailymail.co.uk/video/mol/test/2016/09/21/5739239377694275356/1024x576_MP4_5739239377694275356.mp4")!)
 
             case 4:
 
@@ -73,12 +73,12 @@ class ViewController: UIViewController {
 
         let frame = CGRect(x: 0, y: 0, width: 200, height: 24)
         let headerView = CounterView(frame: frame, currentIndex: displacedViewIndex, count: items.count)
-        let footerView = CounterView(frame: frame, currentIndex: displacedViewIndex, count: items.count)
-
-        let galleryViewController = GalleryViewController(startIndex: displacedViewIndex, itemsDataSource: self, itemsDelegate: self, displacedViewsDataSource: self, configuration: galleryConfiguration())
+        let footerView = UIButton.closeButton()
+        footerView.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
+        footerView.addTarget(self, action: #selector(self.closeVC), for: .touchUpInside)
+        galleryViewController = GalleryViewController(startIndex: displacedViewIndex, itemsDataSource: self, itemsDelegate: self, displacedViewsDataSource: self, configuration: galleryConfiguration())
         galleryViewController.headerView = headerView
         galleryViewController.footerView = footerView
-
         galleryViewController.launchedCompletion = { print("LAUNCHED") }
         galleryViewController.closedCompletion = { print("CLOSED") }
         galleryViewController.swipedToDismissCompletion = { print("SWIPE-DISMISSED") }
@@ -89,25 +89,25 @@ class ViewController: UIViewController {
 
             headerView.count = self.items.count
             headerView.currentIndex = index
-            footerView.count = self.items.count
-            footerView.currentIndex = index
         }
 
         self.presentImageGallery(galleryViewController)
     }
-
+    @objc func closeVC(){
+        galleryViewController.dismiss(animated: false, completion: nil)
+    }
     func galleryConfiguration() -> GalleryConfiguration {
 
         return [
 
-            GalleryConfigurationItem.closeButtonMode(.builtIn),
+            GalleryConfigurationItem.closeButtonMode(.none),
 
             GalleryConfigurationItem.pagingMode(.standard),
             GalleryConfigurationItem.presentationStyle(.displacement),
             GalleryConfigurationItem.hideDecorationViewsOnLaunch(false),
 
             GalleryConfigurationItem.swipeToDismissMode(.vertical),
-            GalleryConfigurationItem.toggleDecorationViewsBySingleTap(false),
+            GalleryConfigurationItem.toggleDecorationViewsBySingleTap(true),
             GalleryConfigurationItem.activityViewByLongPress(false),
 
             GalleryConfigurationItem.overlayColor(UIColor(white: 0.035, alpha: 1)),
@@ -143,7 +143,11 @@ class ViewController: UIViewController {
 
             GalleryConfigurationItem.statusBarHidden(true),
             GalleryConfigurationItem.displacementKeepOriginalInPlace(false),
-            GalleryConfigurationItem.displacementInsetMargin(50)
+            GalleryConfigurationItem.displacementInsetMargin(50),
+            GalleryConfigurationItem.deleteButtonMode(.none),
+            GalleryConfigurationItem.thumbnailsButtonMode(.none),
+            GalleryConfigurationItem.seeAllCloseButtonMode(.none),
+            GalleryConfigurationItem.footerViewLayout(.pinLeft(20, 20))
         ]
     }
 }
