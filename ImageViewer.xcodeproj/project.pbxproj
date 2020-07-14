@@ -16,6 +16,7 @@
 		637822AC1FC4F54D00E839A4 /* UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637822AB1FC4F54D00E839A4 /* UIScreen.swift */; };
 		637822AD1FC4F73000E839A4 /* UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637822AB1FC4F54D00E839A4 /* UIScreen.swift */; };
 		656D04F7C3D17527BC3B0BEB /* Pods_ImageViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4088A187F39EA57A9C010457 /* Pods_ImageViewer.framework */; };
+		855FC82124BD76DD00964394 /* ImageViewer.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 855FC82024BD76DD00964394 /* ImageViewer.bundle */; };
 		9797B788B32246E65C5E97DB /* Pods_ImageViewer_ImageViewerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EF74AC9BFDF095ACFFFC21 /* Pods_ImageViewer_ImageViewerTests.framework */; };
 		A32D40041D45C4DE00AB5ADA /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32D40031D45C4DE00AB5ADA /* Bool.swift */; };
 		A32D40051D45C50800AB5ADA /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32D40031D45C4DE00AB5ADA /* Bool.swift */; };
@@ -107,6 +108,7 @@
 		5AF0EF3CAFE8B7972354F05D /* GalleryItemsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryItemsDelegate.swift; sourceTree = "<group>"; };
 		637822AB1FC4F54D00E839A4 /* UIScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreen.swift; sourceTree = "<group>"; };
 		65DF6D54DCD337830109FB56 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		855FC82024BD76DD00964394 /* ImageViewer.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ImageViewer.bundle; path = Assets/ImageViewer.bundle; sourceTree = "<group>"; };
 		A32D40031D45C4DE00AB5ADA /* Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
 		A393838A1D91EE7200AC9893 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A6E9EF57540AD2933F7430CF /* Pods-ImageViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageViewer.release.xcconfig"; path = "Target Support Files/Pods-ImageViewer/Pods-ImageViewer.release.xcconfig"; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				EB1CEC171C84A4EE00BB27B8 /* Info.plist */,
 				C7DABE581C1224EA00F5BD7B /* Source */,
 				C7DABE531C12248600F5BD7B /* Supporting Files */,
+				855FC82024BD76DD00964394 /* ImageViewer.bundle */,
 			);
 			path = ImageViewer;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				855FC82124BD76DD00964394 /* ImageViewer.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,20 +7,25 @@
 //
 
 import UIKit
-
+class Resource: NSObject{
+    static let share = Resource()
+    private override init() {
+        super.init()
+    }
+    func getImage(name: String) -> UIImage?{
+        let bundle = Bundle(for: self.classForCoder)
+        if let path = bundle.path(forResource: "ImageViewer", ofType: "bundle"){
+            let targetBundle = Bundle(path: path)
+            return UIImage(named: name, in: targetBundle, compatibleWith: nil)
+        }else{ return nil }
+    }
+}
 extension UIButton {
 
     static func circlePlayButton(_ diameter: CGFloat) -> UIButton {
 
-        let button = UIButton(type: .custom)
-        button.frame = CGRect(origin: .zero, size: CGSize(width: diameter, height: diameter))
-
-        let circleImageNormal = CAShapeLayer.circlePlayShape(UIColor.white, diameter: diameter).toImage()
-        button.setImage(circleImageNormal, for: .normal)
-
-        let circleImageHighlighted = CAShapeLayer.circlePlayShape(UIColor.lightGray, diameter: diameter).toImage()
-        button.setImage(circleImageHighlighted, for: .highlighted)
-
+        let button = UIButton(frame: CGRect(origin: .zero, size: CGSize(width: diameter, height: diameter)))
+        button.setImage(Resource.share.getImage(name: "playBtn"), for: [])
         return button
     }
 
