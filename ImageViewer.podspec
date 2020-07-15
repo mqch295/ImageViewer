@@ -17,6 +17,5 @@ Pod::Spec.new do |s|
 
     s.source_files  = "ImageViewer/Source/**/*"
 
-    s.resources    = "ImageViewer/Assets/*.{png,bundle}"
     s.dependency 'KTVHTTPCache'
 end
